@@ -1,0 +1,16 @@
+CP3 official challenge structured-log evidence
+Challenge ID: day13-k4-l3a-monitoring-llmops-v1
+Incident window (UTC): 2026-09-29T09:27:08.163703Z to 2026-09-29T09:27:23.468080Z
+Selected request_received:
+  ts=2026-09-29T09:27:08.163703Z
+  correlation_id=req-45963f0a
+  event=request_received
+Selected response_sent:
+  ts=2026-09-29T09:27:11.676048Z
+  correlation_id=req-45963f0a
+  latency_ms=3510
+  ttft_ms=50
+  tool_name=retrieval
+  tool_success=true
+Other challenge correlation IDs: req-49db184b, req-f64d1461, req-e8b7f25f, req-93d4dd99
+Raw challenge queries and prompt contents intentionally omitted.

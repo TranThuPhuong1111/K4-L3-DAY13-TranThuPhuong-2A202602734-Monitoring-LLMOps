@@ -3,6 +3,7 @@ from __future__ import annotations
 from contextlib import contextmanager
 
 from app import agent as agent_module
+from app.mock_llm import FakeResponse, FakeUsage
 
 
 class ManagedPrompt:
@@ -16,16 +17,31 @@ class ManagedPrompt:
         )
 
 
+class RecordingObservation:
+    def __init__(self, record: dict) -> None:
+        self.record = record
+
+    def update(self, **kwargs) -> None:
+        self.record["updates"].append(kwargs)
+
+
 class RecordingLangfuseClient:
     def __init__(self) -> None:
         self.prompt = ManagedPrompt()
         self.span_updates: list[dict] = []
+        self.observations: list[dict] = []
 
     def get_prompt(self, name: str, **kwargs):
         return self.prompt
 
     def update_current_span(self, **kwargs) -> None:
         self.span_updates.append(kwargs)
+
+    @contextmanager
+    def start_as_current_observation(self, **kwargs):
+        record = {"attributes": kwargs, "updates": []}
+        self.observations.append(record)
+        yield RecordingObservation(record)
 
 
 def test_agent_records_prompt_version_with_v4_observation_api(monkeypatch) -> None:
@@ -54,7 +70,9 @@ def test_agent_records_prompt_version_with_v4_observation_api(monkeypatch) -> No
         correlation_id="req-12345678",
     )
 
-    span_update = client.span_updates[-1]
+    span_update = next(
+        update for update in client.span_updates if "prompt_name" in update.get("metadata", {})
+    )
     assert span_update["metadata"] == {
         "doc_count": 1,
         "query_preview": "Explain traces",
@@ -66,4 +84,55 @@ def test_agent_records_prompt_version_with_v4_observation_api(monkeypatch) -> No
     }
     assert span_update["version"] == "3"
     assert propagated[0]["metadata"]["correlation_id"] == "req-12345678"
-    assert propagated[-1]["prompt"] is client.prompt
+
+    retrieval, generation = client.observations
+    assert retrieval["attributes"]["as_type"] == "retriever"
+    assert retrieval["attributes"]["name"] == "retrieve-context"
+    assert retrieval["updates"][0]["output"]["document_count"] == 1
+    assert generation["attributes"]["as_type"] == "generation"
+    assert generation["attributes"]["name"] == "generate-response"
+    assert generation["attributes"]["model"] == agent.model
+    assert generation["attributes"]["prompt"] is client.prompt
+    assert generation["updates"][0]["usage_details"]["input"] > 0
+    assert generation["updates"][0]["usage_details"]["output"] > 0
+    assert generation["updates"][0]["cost_details"]["output"] > 0
+    assert generation["updates"][0]["metadata"]["prompt_source"] == "langfuse"
+    assert generation["updates"][0]["metadata"]["prompt_version"] == "3"
+
+
+def test_agent_masks_pii_from_trace_inputs_and_outputs(monkeypatch) -> None:
+    client = RecordingLangfuseClient()
+    monkeypatch.setattr(agent_module, "get_langfuse_client", lambda: client)
+    monkeypatch.setattr(agent_module, "tracing_enabled", lambda: False)
+    monkeypatch.setattr(
+        agent_module,
+        "retrieve",
+        lambda message: ["Private document for alice@example.com"],
+    )
+
+    agent = agent_module.LabAgent()
+    agent.llm.generate = lambda prompt: FakeResponse(
+        text="Reply to alice@example.com",
+        usage=FakeUsage(input_tokens=12, output_tokens=6),
+        model=agent.model,
+        ttft_ms=5,
+    )
+    agent_module.LabAgent.run.__wrapped__(
+        agent,
+        user_id="student-01",
+        feature="qa",
+        session_id="session-01",
+        message="Question from alice@example.com",
+        correlation_id="req-12345678",
+    )
+
+    assert client.span_updates[0]["input"] == {
+        "message": "Question from [REDACTED_EMAIL]"
+    }
+    retrieval = client.observations[0]
+    assert "alice@example.com" not in retrieval["updates"][0]["output"]["documents"][0]
+    generation = client.observations[-1]
+    assert "alice@example.com" not in generation["attributes"]["input"]["prompt"]
+    assert generation["updates"][0]["output"] == "Reply to [REDACTED_EMAIL]"
+    root_output = next(update for update in client.span_updates if "output" in update)
+    assert "alice@example.com" not in root_output["output"]["answer"]

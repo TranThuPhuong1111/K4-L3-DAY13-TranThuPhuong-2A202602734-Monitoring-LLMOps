@@ -1,0 +1,3 @@
+Command: python -m pytest -q
+Result: 33 passed, 1 warning in 2.39s
+Warning: Langfuse SDK deprecation for asyncio.iscoroutinefunction (Python 3.16).

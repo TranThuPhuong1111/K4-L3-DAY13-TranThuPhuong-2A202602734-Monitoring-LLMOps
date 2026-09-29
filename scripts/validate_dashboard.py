@@ -75,6 +75,26 @@ def load_dashboard_config(path: Path) -> dict:
             raise DashboardConfigError(
                 f"'{panel_id}.events/fields/aggregations' phải là danh sách"
             )
+        if panel_id == "latency":
+            required_aggregations = {"p50", "p95", "p99", "ttft_p95"}
+            missing_aggregations = required_aggregations - set(panel["aggregations"])
+            if missing_aggregations:
+                missing = ", ".join(sorted(missing_aggregations))
+                raise DashboardConfigError(
+                    f"'latency.aggregations' thiếu: {missing}"
+                )
+        if panel_id == "errors":
+            required_events = {"request_received", "response_sent", "request_failed"}
+            missing_events = required_events - set(panel["events"])
+            if missing_events:
+                missing = ", ".join(sorted(missing_events))
+                raise DashboardConfigError(f"'errors.events' thiếu: {missing}")
+            if "tool_success" not in panel["fields"]:
+                raise DashboardConfigError("'errors.fields' phải có 'tool_success'")
+            if "tool_success_rate_pct" not in panel["aggregations"]:
+                raise DashboardConfigError(
+                    "'errors.aggregations' phải có 'tool_success_rate_pct'"
+                )
 
         threshold = panel["threshold"]
         if not isinstance(threshold, dict):

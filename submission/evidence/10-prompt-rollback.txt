@@ -1,0 +1,8 @@
+Langfuse prompt label rollout and rollback evidence
+Prompt: day13-chat
+Personal project: day13-k4-l3a-2A202602734
+Initial production: v1
+Promotion: production resolved to v2; successful trace req-6e36539f / 669afbe3342d714a5f6394de0bf81dcd
+Rollback: production resolved back to v1; final successful trace req-3bd93b8b / 714defa49423631d0f55d0de81793bd3
+Final verification: GET prompt by label=production returned version 1.
+Candidate v2 remains labeled candidate/latest; baseline v1 remains baseline/production/latest.

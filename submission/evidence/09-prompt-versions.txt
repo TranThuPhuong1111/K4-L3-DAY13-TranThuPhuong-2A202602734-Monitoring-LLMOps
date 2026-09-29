@@ -1,0 +1,17 @@
+Langfuse prompt: day13-chat (text)
+Personal project: day13-k4-l3a-2A202602734
+Version 1 (baseline):
+Feature={{feature}}
+Docs={{docs}}
+Question={{message}}
+Labels at final state: baseline, production, latest
+Commit message: CP4 baseline prompt v1
+
+Version 2 (candidate):
+Feature={{feature}}
+Docs={{docs}}
+Question={{message}}
+
+Answer concisely. When the documentation is relevant, ground the response in it.
+Labels at final state: candidate, latest
+Commit message: CP4 candidate prompt v2: clarify concise, grounded answer format

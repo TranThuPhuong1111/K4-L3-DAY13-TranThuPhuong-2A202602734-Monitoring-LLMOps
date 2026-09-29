@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>K4-L3A Day 13 Monitoring &amp; LLMOps</title>
+<style>
+:root { color-scheme: light; --ink:#172a3a; --muted:#627482; --line:#dce4e9; --surface:#fff; --canvas:#edf2f4; --blue:#3175ad; --amber:#b86d08; --red:#bd3c4a; --green:#187c62; --teal:#087f8c; --violet:#6755a5; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--canvas); color:var(--ink); font-family:"Segoe UI",Tahoma,sans-serif; font-size:14px; }
+header { display:flex; align-items:end; justify-content:space-between; gap:24px; padding:22px 28px 18px; background:#fff; border-bottom:1px solid var(--line); }
+h1 { margin:0; font-family:Georgia,serif; font-size:25px; font-weight:600; }
+.sub { margin-top:6px; color:var(--muted); }
+.meta { color:var(--muted); text-align:right; line-height:1.7; }
+main { max-width:1440px; margin:0 auto; padding:20px 24px 28px; }
+.grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+section { min-height:240px; padding:16px 17px; background:var(--surface); border:1px solid var(--line); border-top:3px solid var(--accent); border-radius:4px; box-shadow:0 1px 2px #1424320b; }
+.latency {--accent:var(--amber)} .traffic {--accent:var(--blue)} .errors {--accent:var(--red)} .cost {--accent:var(--green)} .tokens {--accent:var(--teal)} .quality {--accent:var(--violet)}
+h2 { margin:0 0 5px; font-size:16px; font-weight:650; }
+.hint { color:var(--muted); font-size:12px; }
+.primary { margin:18px 0 16px; font-size:30px; font-weight:650; font-variant-numeric:tabular-nums; }
+.primary small { display:block; margin-top:4px; color:var(--muted); font-size:12px; font-weight:500; }
+.stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.stat { padding-top:8px; border-top:1px solid var(--line); }
+.label { color:var(--muted); font-size:11px; text-transform:uppercase; }
+.value { margin-top:4px; font-size:17px; font-weight:600; font-variant-numeric:tabular-nums; }
+.bar-row { display:grid; grid-template-columns:48px 1fr 88px; align-items:center; gap:8px; margin-top:10px; color:var(--muted); font-size:11px; }
+.bar-track { height:7px; overflow:hidden; background:#e8eef1; border-radius:2px; }
+.bar-track i { display:block; height:100%; background:var(--accent); border-radius:2px; }
+.bar-row b { color:var(--ink); text-align:right; font-weight:600; font-variant-numeric:tabular-nums; }
+.threshold { display:inline-block; margin-top:12px; padding:4px 7px; border:1px solid var(--line); border-radius:3px; color:var(--muted); font-size:11px; }
+.status { display:flex; align-items:center; gap:8px; margin-top:16px; font-weight:600; }
+.dot { width:9px; height:9px; border-radius:50%; background:var(--accent); }
+footer { margin-top:14px; color:var(--muted); font-size:11px; }
+@media (max-width:1000px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:640px) { header { align-items:start; flex-direction:column; padding:18px; } .meta { text-align:left; } main { padding:14px; } .grid { grid-template-columns:1fr; } }
+</style></head>
+<body><header><div><h1>K4-L3A Day 13 Monitoring &amp; LLMOps</h1><div class="sub">Application telemetry · structured logs</div></div>
+<div class="meta">Window: 60 minutes<br>Generated: 2026-09-29 10:19:35 UTC<br>Refresh contract: 30 s</div></header>
+<main><div class="grid">
+<section class="latency"><h2>Latency and TTFT</h2><div class="hint">response_sent · milliseconds</div><div class="primary">3,510<small>P95 ms</small></div><div class="stats"><div class="stat"><div class="label">P50</div><div class="value">1,381</div></div><div class="stat"><div class="label">P99</div><div class="value">3,510</div></div><div class="stat"><div class="label">TTFT P95</div><div class="value">50</div></div></div><div class="threshold">P95 threshold ≤ 3,000 ms</div></section>
+<section class="traffic"><h2>Request traffic</h2><div class="hint">request_received · 12 latest active minutes</div><div class="primary">21<small>requests · 0.35/min</small></div><div class="bar-row"><span>09:37</span><div class="bar-track"><i style="width:2%"></i></div><b>0 req</b></div><div class="bar-row"><span>09:38</span><div class="bar-track"><i style="width:2%"></i></div><b>0 req</b></div><div class="bar-row"><span>09:39</span><div class="bar-track"><i style="width:2%"></i></div><b>0 req</b></div><div class="bar-row"><span>09:40</span><div class="bar-track"><i style="width:2%"></i></div><b>0 req</b></div><div class="bar-row"><span>09:41</span><div class="bar-track"><i style="width:2%"></i></div><b>0 req</b></div><div class="bar-row"><span>09:42</span><div class="bar-track"><i style="width:2%"></i></div><b>0 req</b></div><div class="bar-row"><span>09:43</span><div class="bar-track"><i style="width:100%"></i></div><b>2 req</b></div><div class="bar-row"><span>09:44</span><div class="bar-track"><i style="width:2%"></i></div><b>0 req</b></div><div class="bar-row"><span>09:45</span><div class="bar-track"><i style="width:2%"></i></div><b>0 req</b></div><div class="bar-row"><span>09:46</span><div class="bar-track"><i style="width:2%"></i></div><b>0 req</b></div><div class="bar-row"><span>09:47</span><div class="bar-track"><i style="width:50%"></i></div><b>1 req</b></div><div class="bar-row"><span>09:48</span><div class="bar-track"><i style="width:50%"></i></div><b>1 req</b></div></section>
+<section class="errors"><h2>Errors and retrieval</h2><div class="hint">request_failed / request_received · retrieval attempts</div><div class="primary">47.6<small>% error rate</small></div><div class="stats"><div class="stat"><div class="label">Failures</div><div class="value">10</div></div><div class="stat"><div class="label">Retrieval success</div><div class="value">52.4%</div></div><div class="stat"><div class="label">Requests</div><div class="value">21</div></div></div></section>
+<section class="cost"><h2>Cost over window</h2><div class="hint">response_sent · USD</div><div class="primary">$0.0219<small>total</small></div><div class="stats"><div class="stat"><div class="label">Average/request</div><div class="value">$0.0020</div></div><div class="stat"><div class="label">Successful responses</div><div class="value">11</div></div><div class="stat"><div class="label">Source</div><div class="value">JSONL</div></div></div><div class="bar-row"><span>09:37</span><div class="bar-track"><i style="width:2%"></i></div><b>$0.0000</b></div><div class="bar-row"><span>09:38</span><div class="bar-track"><i style="width:2%"></i></div><b>$0.0000</b></div><div class="bar-row"><span>09:39</span><div class="bar-track"><i style="width:2%"></i></div><b>$0.0000</b></div><div class="bar-row"><span>09:40</span><div class="bar-track"><i style="width:2%"></i></div><b>$0.0000</b></div><div class="bar-row"><span>09:41</span><div class="bar-track"><i style="width:2%"></i></div><b>$0.0000</b></div><div class="bar-row"><span>09:42</span><div class="bar-track"><i style="width:2%"></i></div><b>$0.0000</b></div><div class="bar-row"><span>09:43</span><div class="bar-track"><i style="width:100%"></i></div><b>$0.0038</b></div><div class="bar-row"><span>09:44</span><div class="bar-track"><i style="width:2%"></i></div><b>$0.0000</b></div><div class="bar-row"><span>09:45</span><div class="bar-track"><i style="width:2%"></i></div><b>$0.0000</b></div><div class="bar-row"><span>09:46</span><div class="bar-track"><i style="width:2%"></i></div><b>$0.0000</b></div><div class="bar-row"><span>09:47</span><div class="bar-track"><i style="width:46%"></i></div><b>$0.0017</b></div><div class="bar-row"><span>09:48</span><div class="bar-track"><i style="width:70%"></i></div><b>$0.0026</b></div></section>
+<section class="tokens"><h2>Token usage</h2><div class="hint">response_sent · total tokens by field</div><div class="primary">1,796<small>tokens</small></div><div class="stats"><div class="stat"><div class="label">Input</div><div class="value">422</div></div><div class="stat"><div class="label">Output</div><div class="value">1,374</div></div><div class="stat"><div class="label">Requests</div><div class="value">11</div></div></div></section>
+<section class="quality"><h2>Quality proxy</h2><div class="hint">response_sent · mean score</div><div class="primary">0.818<small>score</small></div><div class="stats"><div class="stat"><div class="label">Responses</div><div class="value">11</div></div><div class="stat"><div class="label">Threshold</div><div class="value">≥ 0.75</div></div><div class="stat"><div class="label">Records</div><div class="value">56</div></div></div><div class="status"><span class="dot"></span>At or above threshold</div></section>
+</div><footer>Snapshot computed from data/logs.jsonl using the six-panel contract in config/dashboard.yaml. Values are not a live auto-refreshing dashboard.</footer></main></body></html>

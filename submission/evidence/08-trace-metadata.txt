@@ -1,0 +1,9 @@
+Langfuse prompt-linked generation metadata, personal project day13-k4-l3a-2A202602734
+Model: claude-sonnet-4-5
+Prompt: day13-chat
+Source: langfuse
+Baseline v1 / baseline label: correlation req-33c1f69c; trace 64011dfb2db88cfd0f14eda3350bd75d; usage input=33 output=97; cost=$0.001554
+Candidate v2 / candidate label: correlation req-57a0ae28; trace 4690411248ab5ef84e7ceee90d53443e; usage input=53 output=137; cost=$0.002214
+Promoted v2 / production label: correlation req-6e36539f; trace 669afbe3342d714a5f6394de0bf81dcd; usage input=53 output=105; cost=$0.001734
+Rolled-back v1 / production label: correlation req-3bd93b8b; trace 714defa49423631d0f55d0de81793bd3; usage input=33 output=170; cost=$0.002649
+Trace data contains no raw prompt input/output in this artifact.

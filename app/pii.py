@@ -4,18 +4,17 @@ import hashlib
 import re
 
 PII_PATTERNS: dict[str, str] = {
-    "email": r"[\w\.-]+@[\w\.-]+\.\w+",
-    "phone_vn": r"(?<!\d)(?:\+84|0)(?:[ .-]?\d){9}(?!\d)",
-    "cccd": r"\b\d{12}\b",
-    "credit_card": r"\b\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}\b",
-    # TODO: Add more patterns (e.g., Passport, Vietnamese address keywords)
+    "email": r"(?<![\w.+-])[A-Z0-9.!#$%&'*+/=?^_`{|}~-]+@(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,63}\b",
+    "credit_card": r"(?<!\d)(?:\d[ -]?){12,18}\d(?!\d)",
+    "cccd": r"(?<!\d)\d{12}(?!\d)",
+    "phone_vn": r"(?<!\d)(?:\+84|0)(?:[ .()-]*\d){9}(?!\d)",
 }
 
 
 def scrub_text(text: str) -> str:
     safe = text
     for name, pattern in PII_PATTERNS.items():
-        safe = re.sub(pattern, f"[REDACTED_{name.upper()}]", safe)
+        safe = re.sub(pattern, f"[REDACTED_{name.upper()}]", safe, flags=re.IGNORECASE)
     return safe
 
 

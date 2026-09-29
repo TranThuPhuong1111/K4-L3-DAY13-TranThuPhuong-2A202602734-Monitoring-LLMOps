@@ -1,0 +1,4 @@
+Synthetic PII scrubber runtime check (scrubbed output only):
+email [REDACTED_EMAIL] phone [REDACTED_PHONE_VN] CCCD [REDACTED_CCCD] card [REDACTED_CREDIT_CARD]
+Covered test classes: email, Vietnamese phone, CCCD, payment card.
+Raw synthetic values intentionally omitted.

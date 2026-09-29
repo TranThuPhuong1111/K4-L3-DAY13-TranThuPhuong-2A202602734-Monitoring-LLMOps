@@ -1,0 +1,19 @@
+Structured-log evidence for CP4 production-label rollback request.
+Session: cp4-prompt-demo
+correlation_id: req-3bd93b8b
+event=request_received
+user_id_hash: b7ef77e0bec2
+feature: qa
+model: claude-sonnet-4-5
+env: dev
+session_id: cp4-prompt-demo
+event=response_sent
+latency_ms: 1042
+ttft_ms: 50
+tokens_in: 33
+tokens_out: 170
+cost_usd: 0.002649
+quality_score: 0.8
+tool_name: retrieval
+tool_success: true
+Message payload omitted; no raw prompt or user content included.

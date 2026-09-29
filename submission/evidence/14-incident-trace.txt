@@ -1,0 +1,22 @@
+CP3 official challenge Langfuse observation evidence
+Challenge ID: day13-k4-l3a-monitoring-llmops-v1
+Correlation ID: req-45963f0a
+Trace ID: 31f162d1bc2328f7414b61fa09a44306
+Root observation:
+  id=69929cf7f11d6660
+  type=AGENT
+  name=lab-agent-run
+  latency=3.511 s
+Retriever child:
+  id=ee9752fa26749a73
+  parent=69929cf7f11d6660
+  type=RETRIEVER
+  name=retrieve-context
+  latency=2.501 s
+Generation child:
+  id=bfdf2d2401aa993d
+  parent=69929cf7f11d6660
+  type=GENERATION
+  name=generate-response
+  latency=0.152 s
+All three observations shared the same trace ID and correlation metadata. Raw challenge inputs/outputs intentionally omitted.

@@ -63,3 +63,43 @@ def test_validator_rejects_panel_without_query_example(tmp_path: Path) -> None:
 
     assert result.returncode == 1
     assert "latency.query" in result.stdout
+
+
+def test_validator_requires_all_latency_percentiles_and_ttft(tmp_path: Path) -> None:
+    payload = yaml.safe_load(
+        (REPO_ROOT / "config" / "dashboard.yaml").read_text(encoding="utf-8")
+    )
+    latency_panel = next(
+        panel for panel in payload["dashboard"]["panels"] if panel["id"] == "latency"
+    )
+    latency_panel["aggregations"].remove("p99")
+    invalid_config = tmp_path / "dashboard.yaml"
+    invalid_config.write_text(
+        yaml.safe_dump(payload, sort_keys=False), encoding="utf-8"
+    )
+
+    result = run_validator(invalid_config)
+
+    assert result.returncode == 1
+    assert "latency" in result.stdout
+
+
+def test_validator_requires_success_and_failure_events_for_retrieval_rate(
+    tmp_path: Path,
+) -> None:
+    payload = yaml.safe_load(
+        (REPO_ROOT / "config" / "dashboard.yaml").read_text(encoding="utf-8")
+    )
+    errors_panel = next(
+        panel for panel in payload["dashboard"]["panels"] if panel["id"] == "errors"
+    )
+    errors_panel["events"] = ["request_received", "request_failed"]
+    invalid_config = tmp_path / "dashboard.yaml"
+    invalid_config.write_text(
+        yaml.safe_dump(payload, sort_keys=False), encoding="utf-8"
+    )
+
+    result = run_validator(invalid_config)
+
+    assert result.returncode == 1
+    assert "errors" in result.stdout

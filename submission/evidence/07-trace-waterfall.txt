@@ -1,0 +1,8 @@
+Langfuse trace waterfall for official CP3 challenge
+Challenge ID: day13-k4-l3a-monitoring-llmops-v1
+Correlation ID: req-45963f0a
+Trace ID: 31f162d1bc2328f7414b61fa09a44306
+AGENT lab-agent-run 3.511 s
+  RETRIEVER retrieve-context 2.501 s
+  GENERATION generate-response 0.152 s
+Retrieval was the dominant span; all observations share the same trace/correlation IDs. Prompt/query content omitted.

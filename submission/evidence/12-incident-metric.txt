@@ -1,0 +1,13 @@
+CP3 official challenge metric evidence
+Challenge ID: day13-k4-l3a-monitoring-llmops-v1
+Cohort: K4
+Workload: python scripts/load_test.py --challenge --concurrency 5
+Challenge config/seed/query: loaded locally by the official challenge runner; values intentionally omitted.
+Incident window (UTC): 2026-09-29T09:27:08.163703Z to 2026-09-29T09:27:23.468080Z
+Requests: 5; HTTP success: 5/5
+Per-request latency_ms: 3510, 2949, 2922, 2932, 2977
+Latency P95: 3510 ms
+Latency P99: 3510 ms
+TTFT P95: 50 ms
+Dashboard P95 threshold: 3000 ms; threshold exceeded in this sample.
+Alert duration caveat: observation window was about 15 seconds, shorter than the configured 5-minute alert duration; alert firing was not verified.

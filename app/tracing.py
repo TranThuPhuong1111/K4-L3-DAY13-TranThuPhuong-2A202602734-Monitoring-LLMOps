@@ -4,6 +4,29 @@ import os
 from contextlib import contextmanager
 from typing import Any
 
+
+class _DummyObservation:
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        return False
+
+    def update(self, **kwargs: Any) -> None:
+        return None
+
+
+class _DummyClient:
+    def update_current_span(self, **kwargs: Any) -> None:
+        return None
+
+    def update_current_generation(self, **kwargs: Any) -> None:
+        return None
+
+    def start_as_current_observation(self, **kwargs: Any) -> _DummyObservation:
+        return _DummyObservation()
+
+
 try:
     from langfuse import get_client, observe, propagate_attributes
 
@@ -16,13 +39,6 @@ except ImportError:  # pragma: no cover - chỉ dùng khi chưa cài requirement
             return func
 
         return decorator
-
-    class _DummyClient:
-        def update_current_span(self, **kwargs: Any) -> None:
-            return None
-
-        def update_current_generation(self, **kwargs: Any) -> None:
-            return None
 
     def get_client():
         return _DummyClient()

@@ -7,10 +7,13 @@ LOG_PATH = Path("data/logs.jsonl")
 REQUIRED_FIELDS = {"ts", "level", "service", "event", "correlation_id"}
 ENRICHMENT_FIELDS = {"user_id_hash", "session_id", "feature", "model"}
 PII_DETECTORS = {
-    "email": re.compile(r"[\w.-]+@[\w.-]+\.\w+"),
-    "phone_vn": re.compile(r"(?<!\d)(?:\+84|0)(?:[ .-]?\d){9}(?!\d)"),
-    "cccd": re.compile(r"\b\d{12}\b"),
-    "credit_card": re.compile(r"\b\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}\b"),
+    "email": re.compile(
+        r"(?<![\w.+-])[A-Z0-9.!#$%&'*+/=?^_`{|}~-]+@(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,63}\b",
+        re.IGNORECASE,
+    ),
+    "phone_vn": re.compile(r"(?<!\d)(?:\+84|0)(?:[ .()-]*\d){9}(?!\d)"),
+    "cccd": re.compile(r"(?<!\d)\d{12}(?!\d)"),
+    "credit_card": re.compile(r"(?<!\d)(?:\d[ -]?){12,18}\d(?!\d)"),
 }
 
 def main() -> None:

@@ -24,6 +24,15 @@ class TracingAdapterTests(unittest.TestCase):
         with patch.dict(os.environ, {"LANGFUSE_PUBLIC_KEY": "pk-only"}, clear=True):
             self.assertFalse(tracing.tracing_enabled())
 
+    def test_fallback_client_supports_child_observations(self) -> None:
+        client = tracing._DummyClient()
+
+        with client.start_as_current_observation(
+            as_type="generation",
+            name="generate-response",
+        ) as observation:
+            observation.update(output="answer")
+
 
 if __name__ == "__main__":
     unittest.main()
