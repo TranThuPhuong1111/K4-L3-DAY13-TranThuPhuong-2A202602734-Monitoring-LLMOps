@@ -7,8 +7,8 @@
 - **Họ và tên:** Trần Thu Phương
 - **MSSV:** 2A202602734
 - **Lớp:** K4-L3A
-- **Repository URL:** `https://github.com/TranThuPhuong1111/K4-L3-DAY13-TranThuPhuong-2A202602734-Monitoring-LLMOps.git` .
-- **Commit SHA cuối:** CP4 source/evidence commit `b7d1a048c8c0618320be2b9650b01a607edd4549`; lấy SHA cuối cùng để nộp từ `git log -1` sau report-metadata commit (một commit không thể tự chứa SHA của chính nó).
+- **Repository URL:** https://github.com/TranThuPhuong1111/K4-L3-DAY13-TranThuPhuong-2A202602734-Monitoring-LLMOps.git
+- **Commit SHA cuối:** Lấy SHA để nộp từ `git log -1` sau commit cuối; CP4 source/evidence nằm trong commit `b7d1a048c8c0618320be2b9650b01a607edd4549`.
 - **Challenge ID:** `day13-k4-l3a-monitoring-llmops-v1` (cohort K4).
 - **Tên project Langfuse cá nhân:** `day13-k4-l3a-2A202602734`
 
